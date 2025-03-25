@@ -1,0 +1,69 @@
+<!-- THIS TEMPLATE IS USED INSIDE EMPLOYEE DASHBOARD TO RENDER OR SEE APPLICANTS APPLIED FOR JOB -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicant Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/applicants.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-users"></i> Applicant Management
+            </h1>
+            <a href="{{ url_for('employee_dashboard') }}" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </header>
+
+        {% if applicants %}
+        <section class="table-wrapper">
+            <table class="applicant-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for applicant in applicants %}
+                    <tr>
+                        <td>{{ applicant.name }}</td>
+                        <td>{{ applicant.email }}</td>
+                        <td>
+                            <span class="status {% if applicant.approval %}approved{% else %}pending{% endif %}">
+                                {% if applicant.approval %}Approved{% else %}Pending{% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('approve_applicant', applicant_email=applicant.email) }}" method="post" style="display:inline;">
+                                <button type="submit" class="btn approve-btn">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                            </form>
+                            <form action="{{ url_for('reject_applicant', applicant_email=applicant.email) }}" method="post" style="display:inline;">
+                                <button type="submit" class="btn reject-btn">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-user-slash"></i>
+            <p>No applicants found</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
