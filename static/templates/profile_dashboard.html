@@ -30,14 +30,53 @@ profile_dashboard.html
         /* Dark Mode Styles */
         body.dark-mode {
             background-color: #0a0a0a !important;
+            color: #ffffff !important;
         }
         
-        .dark-mode .bg-gray-800 {
+        body.dark-mode .bg-gray-800 {
             background-color: #1a1a1a !important;
         }
         
-        .dark-mode .bg-gray-900 {
+        body.dark-mode .bg-gray-900 {
             background-color: #0a0a0a !important;
+        }
+
+        body.dark-mode .bg-gray-700 {
+            background-color: #2d2d2d !important;
+        }
+
+        body.dark-mode .text-gray-400 {
+            color: #a0a0a0 !important;
+        }
+
+        body.dark-mode .text-gray-600 {
+            color: #808080 !important;
+        }
+
+        /* Light Mode Styles */
+        body:not(.dark-mode) {
+            background-color: #f3f4f6 !important;
+            color: #1f2937 !important;
+        }
+
+        body:not(.dark-mode) .bg-gray-800 {
+            background-color: #ffffff !important;
+        }
+
+        body:not(.dark-mode) .bg-gray-900 {
+            background-color: #f3f4f6 !important;
+        }
+
+        body:not(.dark-mode) .bg-gray-700 {
+            background-color: #f9fafb !important;
+        }
+
+        body:not(.dark-mode) .text-gray-400 {
+            color: #6b7280 !important;
+        }
+
+        body:not(.dark-mode) .text-gray-600 {
+            color: #4b5563 !important;
         }
     </style>
 </head>
@@ -58,8 +97,17 @@ profile_dashboard.html
             <h1 class="text-2xl font-bold mb-2">Welcome back, {{ user.name }}!</h1>
             <p class="text-gray-400 mb-6">Complete your profile to improve your job matches</p>
             
+            <!-- Add RRTTC Image -->
+            <div class="flex justify-center mb-6">
+                <img src="{{ url_for('static', filename='img/RRTTC.jpg') }}" alt="RRTTC Logo" class="img-fluid" style="max-width: 60%; height: auto; margin-top: 20px;">
+            </div>
+            
             <div class="flex justify-between items-center mb-6">
-                <div></div> <!-- Empty div for spacing -->
+                <div class="flex items-center space-x-4">
+                    <a href="{{ url_for('logout') }}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </a>
+                </div>
                 <a href="/career" class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-lg transition-all duration-300 flex items-center">
                     <i class="fas fa-briefcase mr-2"></i> Browse Jobs
                 </a>
@@ -197,21 +245,21 @@ profile_dashboard.html
                     <li class="flex justify-between items-center">
                         <div>
                             <h3 class="font-semibold">Senior UX/UI Designer</h3>
-                            <p class="text-gray-400">TechCorp Inc. • Remote • $90K-$120K</p>
+                            <p class="text-gray-400">RRTTC • Remote • $90K-$120K</p>
                         </div>
                         <button class="bg-yellow-500 text-black py-2 px-4 rounded">View</button>
                     </li>
                     <li class="flex justify-between items-center">
                         <div>
                             <h3 class="font-semibold">Frontend Developer</h3>
-                            <p class="text-gray-400">Global Solutions • New York • $85K-$100K</p>
+                            <p class="text-gray-400">RRTTC • New York • $85K-$100K</p>
                         </div>
                         <button class="bg-yellow-500 text-black py-2 px-4 rounded">View</button>
                     </li>
                     <li class="flex justify-between items-center">
                         <div>
                             <h3 class="font-semibold">Product Manager</h3>
-                            <p class="text-gray-400">Innovate Labs • San Francisco • $110K-$140K</p>
+                            <p class="text-gray-400">RRTTC • San Francisco • $110K-$140K</p>
                         </div>
                         <button class="bg-yellow-500 text-black py-2 px-4 rounded">View</button>
                     </li>
@@ -220,7 +268,6 @@ profile_dashboard.html
             </div>
         </div>
     </div>
-    <a href="{{ url_for('logout') }}" class="text-blue-500 hover:underline">Logout</a>
 
     <!-- Scripts -->
     <script>
@@ -233,9 +280,13 @@ profile_dashboard.html
             if (body.classList.contains("dark-mode")) {
                 localStorage.setItem("mode", "dark");
                 button.textContent = "Light Mode";
+                button.classList.remove("bg-blue-400", "hover:bg-blue-500");
+                button.classList.add("bg-yellow-400", "hover:bg-yellow-500");
             } else {
                 localStorage.setItem("mode", "light");
                 button.textContent = "Dark Mode";
+                button.classList.remove("bg-yellow-400", "hover:bg-yellow-500");
+                button.classList.add("bg-yellow-400", "hover:bg-yellow-500");
             }
         }
 
@@ -247,9 +298,13 @@ profile_dashboard.html
             if (savedMode === "light") {
                 document.body.classList.remove("dark-mode");
                 button.textContent = "Dark Mode";
+                button.classList.remove("bg-blue-400", "hover:bg-blue-500");
+                button.classList.add("bg-yellow-400", "hover:bg-yellow-500");
             } else {
                 document.body.classList.add("dark-mode");
                 button.textContent = "Light Mode";
+                button.classList.remove("bg-blue-400", "hover:bg-blue-500");
+                button.classList.add("bg-yellow-400", "hover:bg-yellow-500");
             }
         }
 
